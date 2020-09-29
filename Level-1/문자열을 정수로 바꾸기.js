@@ -1,4 +1,4 @@
-const solution = (s) => {
+function solution(s) {
   let sign = 1;
   let answer = [];
   [...s].forEach((e) => {
@@ -7,8 +7,8 @@ const solution = (s) => {
     } else if (e === '-') {
       sign = -1;
     } else {
-      answer.push(Number(e));
+      answer.push(e);
     }
   });
-  return Number(answer.join('')) * sign;
-};
+  return answer.join('') * sign;
+}

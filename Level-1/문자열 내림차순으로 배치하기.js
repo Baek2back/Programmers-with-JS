@@ -1,12 +1,3 @@
-function solution(s) {
-  return [...s]
-    .sort((a, b) => {
-      if (a > b) {
-        return -1;
-      } else if (a < b) {
-        return 1;
-      }
-      return 0;
-    })
-    .join('');
-}
+const solution = (s) => {
+  return [...s].sort((a, b) => (a > b ? -1 : 1)).join('');
+};
