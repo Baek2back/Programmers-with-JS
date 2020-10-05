@@ -12,3 +12,17 @@ const solution = (s) => {
   });
   return answer.join(' ');
 };
+
+function solution(s) {
+  const words = s.split(' ');
+  words.forEach((word, wordsIdx) => {
+    words[wordsIdx] = [...word]
+      .map((alphabet, wordIdx) => {
+        return wordIdx % 2 === 0
+          ? alphabet.toUpperCase()
+          : alphabet.toLowerCase();
+      })
+      .join('');
+  });
+  return words.join(' ');
+}
