@@ -1,3 +1,3 @@
-const solution = (arr) => {
-  return arr.reduce((acc, e) => acc + e, 0) / arr.length;
-};
+function solution(arr) {
+  return arr.reduce((acc, v) => acc + v, 0) / arr.length;
+}

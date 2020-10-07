@@ -1,5 +1,4 @@
-const solution = (x) => {
-  return (
-    x % [...x.toString()].map((e) => Number(e)).reduce((a, b) => a + b, 0) === 0
-  );
-};
+function solution(x) {
+  const divisor = [...x.toString()].reduce((acc, v) => acc + Number(v), 0);
+  return x % divisor === 0;
+}

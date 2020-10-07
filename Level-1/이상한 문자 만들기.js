@@ -1,17 +1,15 @@
-const solution = (s) => {
-  let answer = [];
+function solution(s) {
+  const answer = [];
   const words = s.split(' ');
   words.forEach((word) => {
     answer.push(
       [...word]
-        .map((e, idx) => {
-          return idx % 2 ? e.toLowerCase() : e.toUpperCase();
-        })
+        .map((v, i) => (i % 2 ? v.toLowerCase() : v.toUpperCase()))
         .join('')
     );
   });
   return answer.join(' ');
-};
+}
 
 function solution(s) {
   const words = s.split(' ');
