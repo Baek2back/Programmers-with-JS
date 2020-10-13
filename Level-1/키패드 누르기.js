@@ -1,5 +1,9 @@
 function solution(numbers, hand) {
-  const abs = Math.abs;
+  function getDiff(p1, p2) {
+    const [x1, y1] = p1;
+    const [x2, y2] = p2;
+    return Math.abs(x2 - x1) + Math.abs(y2 - y1);
+  }
   const leftKey = [1, 4, 7];
   const rightKey = [3, 6, 9];
   const centerKey = [2, 5, 8, 0];
@@ -16,35 +20,29 @@ function solution(numbers, hand) {
         rightHand = [rightKey.indexOf(number), 2];
         return 'R';
       } else {
-        const center = [centerKey.indexOf(number), 1];
-        const [centerRow, centerCol] = center;
-        const [leftRow, leftCol, rightRow, rightCol] = [
-          ...leftHand,
-          ...rightHand
-        ];
-        const [leftDiff, rightDiff] = [
-          abs(centerRow - leftRow) + abs(centerCol - leftCol),
-          abs(centerRow - rightRow) + abs(centerCol - rightCol)
-        ];
+        const target = [centerKey.indexOf(number), 1];
+        const leftDiff = getDiff(target, leftHand);
+        const rightDiff = getDiff(target, rightHand);
         if (leftDiff === rightDiff) {
           if (hand === 'left') {
-            leftHand = center;
+            leftHand = target;
             return 'L';
           } else if (hand === 'right') {
-            rightHand = center;
+            rightHand = target;
             return 'R';
           }
         } else {
           if (leftDiff < rightDiff) {
-            leftHand = center;
+            leftHand = target;
             return 'L';
           } else {
-            rightHand = center;
+            rightHand = target;
             return 'R';
           }
         }
       }
     })
     .join('');
+
   return answer;
 }
