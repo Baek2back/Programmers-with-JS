@@ -1,12 +1,8 @@
 function solution(skill, skill_trees) {
-  const result = skill_trees
+  const answer = skill_trees
     .map((skills) => {
-      return [...skills]
-        .map((s) => {
-          return skill.includes(s) ? s : '';
-        })
-        .join('');
+      return [...skills].filter((s) => skill.includes(s)).join('');
     })
-    .filter((v) => skill.indexOf(v) === 0);
-  return result.length;
+    .filter((skills) => skill.indexOf(skills) === 0);
+  return answer.length;
 }
