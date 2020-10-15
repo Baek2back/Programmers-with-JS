@@ -1,4 +1,3 @@
 function solution(x) {
-  const divisor = [...x.toString()].reduce((acc, v) => acc + Number(v), 0);
-  return x % divisor === 0;
+  return x % [...x.toString()].map(Number).reduce((a, b) => a + b, 0) === 0;
 }

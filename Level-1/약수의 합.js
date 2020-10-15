@@ -1,4 +1,6 @@
-const solution = (n) => {
-  const candidates = [...Array(Math.floor(n / 2)).keys()].map((i) => i + 1);
-  return candidates.filter((c) => n % c === 0).reduce((a, b) => a + b, n);
-};
+function solution(n) {
+  const candidates = [...Array(Math.floor(n / 2)).keys()].map((v) => v + 1);
+  return candidates.reduce((answer, v, i) => {
+    return n % v === 0 ? answer + v : answer;
+  }, n);
+}

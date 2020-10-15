@@ -3,8 +3,7 @@ function solution(s) {
   return words
     .map((word) => {
       const [first, ...others] = [...word];
-      const rest = [...others];
-      return [first && first.toUpperCase(), ...rest].join('');
+      return [first && first.toUpperCase(), ...others].join('');
     })
     .join(' ');
 }

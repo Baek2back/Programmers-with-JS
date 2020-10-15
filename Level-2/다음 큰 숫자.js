@@ -14,3 +14,12 @@ function solution(n) {
   }
   return answer;
 }
+
+function solution(n) {
+  const oneInN = (n.toString(2).match(/1/g) || []).length;
+  while (true) {
+    n += 1;
+    const next = (n.toString(2).match(/1/g) || []).length;
+    if (oneInN === next) return n;
+  }
+}
