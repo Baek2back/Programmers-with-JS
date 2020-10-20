@@ -1,22 +1,21 @@
 function solution(priorities, location) {
-  const printers = priorities.map((v, i) => {
-    return { p: v, i };
-  });
   let answer = 0;
+  const printers = priorities.map((priority, idx) => {
+    return { priority, idx };
+  });
   while (printers.length) {
     const current = printers.shift();
     const result = printers.some((printer) => {
-      if (current.p < printer.p) {
+      if (current.priority < printer.priority) {
         printers.push(current);
         return true;
       }
     });
     if (result === false) {
       answer++;
-      if (current.i === location) {
+      if (current.idx === location) {
         return answer;
       }
     }
   }
-  return answer;
 }

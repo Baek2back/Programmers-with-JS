@@ -3,12 +3,9 @@ function solution(people, limit) {
   people.sort((a, b) => a - b);
   while (people.length) {
     const lightest = people[0];
-    const heaviest = people[people.length - 1];
+    const heaviest = people.pop();
     if (lightest + heaviest <= limit) {
       people.shift();
-      people.pop();
-    } else {
-      people.pop();
     }
     answer++;
   }

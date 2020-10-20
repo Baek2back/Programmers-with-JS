@@ -1,9 +1,4 @@
 function solution(numbers) {
-  const answer = numbers
-    .map((v) => v.toString())
-    .sort((a, b) => {
-      return a + b < b + a ? 1 : -1;
-    })
-    .join('');
-  return Number(answer[0]) ? answer : '0';
+  const answer = numbers.map(String).sort((a, b) => (a + b < b + a ? 1 : -1));
+  return answer[0] === '0' ? '0' : answer.join('');
 }
