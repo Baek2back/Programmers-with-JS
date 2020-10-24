@@ -16,10 +16,13 @@ function solution(n) {
 }
 
 function solution(n) {
-  const oneInN = (n.toString(2).match(/1/g) || []).length;
-  while (true) {
-    n += 1;
-    const next = (n.toString(2).match(/1/g) || []).length;
-    if (oneInN === next) return n;
+  function bitCount(n) {
+      return n.toString(2).match(/1/g).length;
   }
-}
+  const target = bitCount(n);
+  let next = n + 1;
+  while (target !== bitCount(next)) {
+      next++;
+  }
+  return next;
+}}
