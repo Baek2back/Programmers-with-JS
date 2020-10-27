@@ -1,10 +1,15 @@
 function solution(s) {
-  let check = 0;
-  for (const parentheses of s) {
-    check += parentheses === '(' ? 1 : -1;
-    if (check < 0) {
-      return false;
+  let correct = 0;
+  for (const parenthesis of s) {
+    switch (parenthesis) {
+      case '(':
+        correct += 1;
+        break;
+      case ')':
+        correct -= 1;
+        break;
     }
+    if (correct < 0) return false;
   }
-  return check ? false : true;
+  return correct ? false : true;
 }
