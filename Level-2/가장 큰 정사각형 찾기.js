@@ -9,5 +9,8 @@ function solution(board) {
       row[colIdx] = Math.min(...around) + 1;
     });
   });
-  return Math.pow(Math.max(...board.map((v) => Math.max(...v))), 2);
+  return Math.pow(
+    board.map((v) => Math.max(...v)).reduce((ret, v) => Math.max(ret, v), 0),
+    2
+  );
 }

@@ -1,18 +1,15 @@
 function solution(m, musicinfos) {
-  function getTotalMinutesFromTime(time, isEnd) {
+  function getTotalMinutesFromTime(time) {
     const [hour, minute] = time.split(':').map(Number);
     return hour * 60 + minute;
   }
   function modifySharpInMelody(regExp, origin) {
     return origin.replace(regExp, (sound) => {
-      if (sound.length === 2) {
-        const [alphabet, sharp] = [...sound];
-        return alphabet.toLowerCase();
-      }
-      return sound;
+      const [alphabet, sharp] = sound;
+      return alphabet.toLowerCase();
     });
   }
-  const regExp = /[A-Z](#)?/g;
+  const regExp = /([A-Z]\#)/g;
   const srcMelody = modifySharpInMelody(regExp, m);
   const playList = musicinfos.map((musicinfo) => {
     const [start, end, name, rawMelody] = musicinfo.split(',');
