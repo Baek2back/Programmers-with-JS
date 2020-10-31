@@ -26,9 +26,8 @@ function solution(nums) {
   };
   const sieve = makeSieve(3000);
   const combinations = getCombinations(nums, 3);
-  const answer = combinations.reduce((answer, combination) => {
-    return sieve[getSumOfArray(combination)] ? answer + 1 : answer;
-  }, 0);
-
+  const answer = combinations.filter(
+    (combination) => sieve[getSumOfArray(combination)]
+  ).length;
   return answer;
 }
