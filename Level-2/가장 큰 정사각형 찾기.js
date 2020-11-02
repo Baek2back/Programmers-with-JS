@@ -5,12 +5,10 @@ function solution(board) {
       if (colIdx === 0 || col === 0) return;
       const prevRow = board[rowIdx - 1];
       const prevCol = row[colIdx - 1];
-      const around = [prevCol, prevRow[colIdx - 1], prevRow[colIdx]];
+      const around = [prevRow[colIdx], prevRow[colIdx - 1], prevCol];
       row[colIdx] = Math.min(...around) + 1;
     });
   });
-  return Math.pow(
-    board.map((v) => Math.max(...v)).reduce((ret, v) => Math.max(ret, v), 0),
-    2
-  );
+  const getMaxFromEachRow = board.map((row) => Math.max(...row));
+  return Math.pow(Math.max(...getMaxFromEachRow), 2);
 }

@@ -1,10 +1,10 @@
 function solution(record) {
-  const idMap = {};
   const actionMap = {
     Enter: '님이 들어왔습니다.',
     Leave: '님이 나갔습니다.'
   };
-  const answer = record
+  const idMap = {};
+  const commands = record
     .map((line) => {
       const [action, id, name] = line.split(' ');
       switch (action) {
@@ -18,10 +18,9 @@ function solution(record) {
           return '';
       }
     })
-    .filter((v) => v)
-    .map((line) => {
-      const [id, command] = line;
-      return `${idMap[id] + command}`;
-    });
-  return answer;
+    .filter((v) => v);
+  return commands.map((command) => {
+    const [id, action] = command;
+    return `${idMap[id] + action}`;
+  });
 }

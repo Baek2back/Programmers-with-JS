@@ -1,12 +1,10 @@
 function solution(land) {
-  const newLand = land.reduce((newLand, row, rowIdx) => {
-    if (rowIdx === 0) return (newLand = row);
+  const answer = land.reduce((ret, row, rowIdx) => {
+    if (rowIdx === 0) return row;
     return row.map((col, colIdx) => {
-      const removeSameIndexInCurrentRow = newLand.filter(
-        (_, newLandColIdx) => colIdx !== newLandColIdx
-      );
-      return col + Math.max(...removeSameIndexInCurrentRow);
+      const removeSameIndexFromPrevRow = ret.filter((v, i) => i !== colIdx);
+      return col + Math.max(...removeSameIndexFromPrevRow);
     });
   }, []);
-  return Math.max(...newLand);
+  return Math.max(...answer);
 }

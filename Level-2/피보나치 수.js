@@ -1,11 +1,9 @@
 function solution(n) {
-  let prevTwo = 0;
-  let prevOne = 1;
-  let answer = prevTwo + prevOne;
+  let [prev2, prev1] = [0, 1];
+  let answer = prev2 + prev1;
   for (let i = 2; i < n; i++) {
-    prevTwo = prevOne;
-    prevOne = answer;
-    answer = (prevTwo + prevOne) % 1234567;
+    [prev2, prev1] = [prev1, answer];
+    answer = prev2 + prev1;
   }
   return answer;
 }

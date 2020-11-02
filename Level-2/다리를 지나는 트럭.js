@@ -10,18 +10,18 @@ function solution(bridge_length, weight, truck_weights) {
   }
   let time = 0;
   let onBridge = [];
-  let waiting = truck_weights.map((weight) => {
+  let waitings = truck_weights.map((weight) => {
     return { weight, location: 0 };
   });
-  while (onBridge.length || waiting.length) {
+  while (onBridge.length || waitings.length) {
     time++;
     onBridge = removePassedTruckOnBridge(onBridge, bridge_length);
     if (
       onBridge.length < bridge_length &&
-      waiting.length &&
-      getTotalWeightsOnBridge(onBridge) + waiting[0].weight <= weight
+      waitings.length &&
+      getTotalWeightsOnBridge(onBridge) + waitings[0].weight <= weight
     ) {
-      onBridge.push(waiting.shift());
+      onBridge.push(waitings.shift());
     }
   }
   return time;

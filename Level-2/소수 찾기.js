@@ -1,6 +1,6 @@
 function solution(numbers) {
   const getPermutations = (arr, toSelectNumber) => {
-    if (toSelectNumber === 1) return arr.map((value) => [value]);
+    if (toSelectNumber === 1) return arr.map((v) => [v]);
     return arr.reduce((ret, fixed, index, origin) => {
       const rest = [...origin.slice(0, index), ...origin.slice(index + 1)];
       const permutations = getPermutations(rest, toSelectNumber - 1);
@@ -10,31 +10,26 @@ function solution(numbers) {
       return (ret = [...ret, ...attached]);
     }, []);
   };
-
+  const makeStringFromArray = (arr) => {
+    return arr.reduce((ret, v) => ret + v, '');
+  };
   const makeSieve = (limit) => {
     const sieve = [...Array(limit + 1)].fill(false).fill(true, 2);
-    sieve.forEach((v, i, src) => {
+    sieve.forEach((v, i) => {
       if (v && 0 < i && i <= Math.sqrt(limit)) {
         for (let mult = Math.pow(i, 2); mult <= limit; mult += i) {
-          src[mult] = false;
+          sieve[mult] = false;
         }
       }
     });
     return sieve;
   };
 
-  const getRange = (limit) => {
-    return [...Array(limit).keys()].map((v) => v + 1);
-  };
-
-  const range = getRange(numbers.length);
-
-  const candidates = range.reduce((candidates, v) => {
-    const permutations = getPermutations([...numbers], v).map((v) =>
-      Number(v.join(''))
+  const candidates = [...numbers].reduce((candidates, _, idx) => {
+    const permutations = getPermutations([...numbers], idx + 1).map(
+      makeStringFromArray
     );
-    candidates = [...candidates, ...permutations];
-    return [...new Set(candidates)];
+    return [...new Set([...candidates, ...permutations])];
   }, []);
 
   const sieve = makeSieve(9999999);
