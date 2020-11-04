@@ -2,13 +2,16 @@ function solution(nums) {
   const getCombinations = (arr, toSelectNumber) => {
     if (toSelectNumber === 1) return arr.map((value) => [value]);
     return arr.reduce((ret, fixed, index, origin) => {
-      const rest = origin.slice(index + 1);
+      const rest = [...origin.slice(index + 1)];
       const combinations = getCombinations(rest, toSelectNumber - 1);
       const attached = combinations.map((combination) => {
         return [fixed, ...combination];
       });
       return (ret = [...ret, ...attached]);
     }, []);
+  };
+  const getSumOfArray = (arr) => {
+    return arr.reduce((a, b) => a + b, 0);
   };
   const makeSieve = (limit) => {
     const sieve = [...Array(limit + 1)].fill(false).fill(true, 2);
@@ -21,13 +24,10 @@ function solution(nums) {
     });
     return sieve;
   };
-  const getSumOfArray = (arr) => {
-    return arr.reduce((ret, v) => ret + v, 0);
-  };
+  const combinations = [
+    ...new Set(getCombinations(nums, 3).map(getSumOfArray))
+  ];
   const sieve = makeSieve(3000);
-  const combinations = getCombinations(nums, 3);
-  const answer = combinations.filter(
-    (combination) => sieve[getSumOfArray(combination)]
-  ).length;
-  return answer;
+
+  return combinations.filter((combination) => sieve[combination]).length;
 }

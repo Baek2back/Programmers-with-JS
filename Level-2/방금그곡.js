@@ -1,33 +1,33 @@
 function solution(m, musicinfos) {
-  const replaceSharpInMelody = (melody) => {
-    return melody.replace(/([A-Z]#)/g, (m) => {
-      const [alphabet, sharp] = m;
-      return alphabet.toLowerCase();
-    });
-  };
   const getTotalMinutesInTime = (time) => {
     const [hour, minute] = time.split(':').map(Number);
     return hour * 60 + minute;
   };
+  const regExp = /([A-Z]\#)/g;
+  const replaceSharpInMelody = (melody) => {
+    return melody.replace(regExp, (note) => {
+      const [alphabet, sharp] = note;
+      return alphabet.toLowerCase();
+    });
+  };
   const remember = replaceSharpInMelody(m);
 
   const playList = musicinfos.map((musicinfo) => {
-    let [start, end, name, melody] = musicinfo.split(',');
-    melody = replaceSharpInMelody(melody);
+    const [start, end, name, melody] = musicinfo.split(',');
     const playTime = getTotalMinutesInTime(end) - getTotalMinutesInTime(start);
-    const playedMelody =
-      melody.repeat(Math.floor(playTime / melody.length)) +
-      melody.slice(0, playTime % melody.length);
+    const removeSharp = replaceSharpInMelody(melody);
     return {
-      playTime,
       name,
-      playedMelody
+      playTime,
+      recoverMelody:
+        removeSharp.repeat(playTime / removeSharp.length) +
+        removeSharp.slice(0, playTime % removeSharp.length)
     };
   });
 
-  const corrects = playList.filter((song) => {
-    return song.playedMelody.indexOf(remember) !== -1;
-  });
-  const [first, ...rest] = corrects.sort((a, b) => b.playTime - a.playTime);
-  return corrects.length ? first.name : '(None)';
+  const matched = playList.filter(
+    (song) => song.recoverMelody.indexOf(remember) !== -1
+  );
+  const [answer] = matched;
+  return matched.length ? answer.name : '(None)';
 }

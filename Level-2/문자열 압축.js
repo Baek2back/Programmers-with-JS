@@ -1,8 +1,8 @@
 function solution(s) {
-  const splitOriginByLength = (origin, length) => {
+  const getSplitedResult = (str, diff) => {
     const ret = [];
-    for (let i = 0; i <= origin.length; i += length) {
-      ret.push(origin.slice(i, i + length));
+    for (let i = 0; i <= str.length; i += diff) {
+      ret.push(str.slice(i, i + diff));
     }
     return ret.filter((v) => v).map((v) => [1, v]);
   };
@@ -21,22 +21,19 @@ function solution(s) {
       return (ret = [...ret, v]);
     }, []);
   };
-  const getZippedString = (result) => {
-    return result.reduce((ret, v) => {
+  const getZippedString = (strArr) => {
+    return strArr.reduce((ret, v) => {
       const [count, str] = v;
       return count === 1 ? ret + str : ret + count + str;
     }, '');
   };
-
-  let answer = s.length;
   const limit = Math.floor(s.length / 2);
-
-  for (let i = 1; i <= limit; i++) {
-    const splited = splitOriginByLength(s, i);
-    const result = getZippedResult(splited);
-    const zipped = getZippedString(result);
-    answer = Math.min(answer, zipped.length);
+  let answer = s.length;
+  for (let diff = 1; diff <= limit; diff++) {
+    const splitedResult = getSplitedResult(s, diff);
+    const zippedResult = getZippedResult(splitedResult);
+    const zippedString = getZippedString(zippedResult);
+    answer = Math.min(answer, zippedString.length);
   }
-
   return answer;
 }
