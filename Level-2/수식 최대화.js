@@ -1,16 +1,20 @@
 function solution(expression) {
-  const calcTwoElements = (e1, e2, operand) => {
+  const calcTwoElementsWithOperand = (e1, e2, operand) => {
     switch (operand) {
-      case '*':
-        return e1 * e2;
       case '+':
         return e1 + e2;
       case '-':
         return e1 - e2;
+      case '*':
+        return e1 * e2;
     }
   };
-  const calcTwoElementsInArrayAndRemoveFirstOne = (arr, index, operand) => {
-    arr[index + 1] = calcTwoElements(arr[index], arr[index + 1], operand);
+  const refreshArrayWithCalculatedState = (arr, index, operand) => {
+    arr[index + 1] = calcTwoElementsWithOperand(
+      arr[index],
+      arr[index + 1],
+      operand
+    );
     arr[index] = null;
     return arr;
   };
@@ -25,35 +29,26 @@ function solution(expression) {
       return (ret = [...ret, ...attached]);
     }, []);
   };
-  const regExp = /(\-|\*|\+)/g;
-  const numbers = expression.replace(regExp, ' ').split(' ').map(Number);
-  const operands = expression.match(regExp);
-  const removeDuplicatedOperands = [...new Set(operands)];
-  const permutations = getPermutations(
-    removeDuplicatedOperands,
-    removeDuplicatedOperands.length
-  );
-  let answer = Number.MIN_SAFE_INTEGER;
-  permutations.map((permutation) => {
-    let restNumbers = [...numbers];
-    let restOperands = [...operands];
+  const regExp = /(\-|\+|\*)/g;
+  const originNumbers = expression.replace(regExp, ' ').split(' ').map(Number);
+  const originOperands = expression.match(regExp);
+  const occuredOperands = [...new Set(originOperands)];
+  const permutations = getPermutations(occuredOperands, occuredOperands.length);
+  const answer = permutations.map((permutation) => {
+    let numbers = [...originNumbers];
+    let operands = [...originOperands];
     permutation.forEach((element) => {
-      restOperands = restOperands.map((operand, idx) => {
-        if (operand === element) {
-          restNumbers = calcTwoElementsInArrayAndRemoveFirstOne(
-            restNumbers,
-            idx,
-            operand
-          );
+      operands = operands.map((operand, idx) => {
+        if (element === operand) {
+          numbers = refreshArrayWithCalculatedState(numbers, idx, operand);
           return null;
         }
         return operand;
       });
-      restNumbers = restNumbers.filter((v) => v !== null);
-      restOperands = restOperands.filter((v) => v !== null);
+      numbers = numbers.filter((v) => v !== null);
+      operands = operands.filter((v) => v !== null);
     });
-    const result = restNumbers;
-    answer = Math.max(answer, Math.abs(result));
+    return numbers;
   });
-  return answer;
+  return Math.max(...answer.flat().map(Math.abs));
 }
