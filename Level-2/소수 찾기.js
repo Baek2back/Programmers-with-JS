@@ -29,7 +29,7 @@ function solution(numbers) {
   const sieve = makeSieve(9999999);
 
   return range(numbers.length)
-    .reduce((ret, v, i) => {
+    .reduce((ret, v) => {
       const permutations = getPermutations([...numbers], v)
         .map((v) => v.join(''))
         .map(Number);

@@ -14,8 +14,6 @@ function solution(s) {
         if (prev === current) {
           ret[ret.length - 1] = [count + 1, prev];
           return ret;
-        } else {
-          return (ret = [...ret, v]);
         }
       }
       return (ret = [...ret, v]);
@@ -27,8 +25,8 @@ function solution(s) {
       return count === 1 ? ret + str : ret + count + str;
     }, '');
   };
-  const limit = Math.floor(s.length / 2);
   let answer = s.length;
+  const limit = Math.floor(s.length / 2);
   for (let diff = 1; diff <= limit; diff++) {
     const splitedResult = getSplitedResult(s, diff);
     const zippedResult = getZippedResult(splitedResult);
