@@ -3,7 +3,7 @@ const solution = (participant, completion) => {
     map[name] = map[name] ? map[name] + 1 : 1;
     return map;
   }, {});
-  return participant.find((name) => {
+  return participant.find(name => {
     if (map[name]) map[name] = map[name] - 1;
     else return true;
   });
