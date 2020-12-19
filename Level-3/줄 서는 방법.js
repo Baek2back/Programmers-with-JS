@@ -1,27 +1,23 @@
 function solution(n, k) {
-  function rangeFromOneToLimit(limit) {
-    return [...Array(limit).keys()].map(v => v + 1);
-  }
-  function refreshArray(arr, index) {
-    return [...arr.slice(0, index), ...arr.slice(index + 1)];
-  }
-  function factorial(n) {
-    let answer = 1;
-    while (n) {
-      answer *= n;
-      n -= 1;
-    }
-    return answer;
-  }
+  const rangeFromOneToLimit = limit => {
+    return Array.from({ length: limit }, (_, i) => i + 1);
+  };
+  const removeElementsByIdx = (array, index) => {
+    return [...array.slice(0, index), ...array.slice(index + 1)];
+  };
+  const factorial = (n, current = 1, value = 1) => {
+    if (!n || n === current) return value;
+    return factorial(n, current + 1, value * (current + 1));
+  };
+  k = k - 1;
   let persons = rangeFromOneToLimit(n);
   const answer = [];
-  k = k - 1;
   while (persons.length) {
-    const factorialResult = factorial(persons.length - 1);
-    const index = Math.floor(k / factorialResult);
+    const factResult = factorial(persons.length - 1);
+    const index = Math.floor(k / factResult);
     answer.push(persons[index]);
-    k %= factorialResult;
-    persons = refreshArray(persons, index);
+    k = k % factResult;
+    persons = removeElementsByIdx(persons, index);
   }
   return answer;
 }

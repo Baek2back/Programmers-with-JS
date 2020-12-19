@@ -1,26 +1,39 @@
 function solution(operations) {
-  const enqueue = (queue, number) => {
-    let loc = -1;
-    const result = queue.some((v, i) => {
-      if (v > number) {
-        loc = i;
-        return true;
-      }
-    });
-    queue.splice(result ? loc : queue.length, 0, number);
-    return queue;
-  };
-  let queue = [];
+  class Queue {
+    constructor() {
+      this.queue = [];
+    }
+    enqueue(value) {
+      let insertLoc = -1;
+      const result = this.queue.some((element, elementIdx) => {
+        if (element > value) {
+          insertLoc = elementIdx;
+          return true;
+        }
+      });
+      this.queue.splice(result ? insertLoc : this.queue.length, 0, value);
+    }
+    get min() {
+      return this.queue.pop();
+    }
+    get max() {
+      return this.queue.shift();
+    }
+    get length() {
+      return this.queue.length;
+    }
+  }
+  const q = new Queue();
   operations.forEach(operation => {
     const [action, number] = operation.split(' ');
     switch (action) {
       case 'I':
-        queue = enqueue(queue, +number);
+        q.enqueue(+number);
         break;
       case 'D':
-        number === '1' ? queue.pop() : queue.shift();
+        number === '1' ? q.min : q.max;
         break;
     }
   });
-  return queue.length ? [queue.pop(), queue.shift()] : [0, 0];
+  return q.length ? [q.min, q.max] : [0, 0];
 }

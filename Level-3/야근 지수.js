@@ -3,18 +3,19 @@ function solution(n, works) {
   if (total <= n) return 0;
   works.sort((a, b) => b - a);
   while (n) {
-    let max = works.shift();
-    if (max === 0) return 0;
-    let toInsertNumber = max - 1;
-    let idx = -1;
-    works.some((work, i) => {
-      if (work < toInsertNumber) {
-        return true;
+    const max = works.shift();
+    if (!max) return 0;
+    const toInsertNumber = max - 1;
+    let toInsertIdx = -1;
+    works.some((work, workIdx) => {
+      if (work >= toInsertNumber) {
+        toInsertIdx = workIdx;
+        return false;
       }
-      idx = i;
+      return true;
     });
-    works.splice(idx + 1, 0, toInsertNumber);
-    n--;
+    works.splice(toInsertIdx + 1, 0, toInsertNumber);
+    n = n - 1;
   }
   return works.reduce((ret, v) => ret + v ** 2, 0);
 }

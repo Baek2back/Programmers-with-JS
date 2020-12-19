@@ -1,5 +1,5 @@
 function solution(genres, plays) {
-  const map = genres.reduce((obj, genre, idx) => {
+  const genreMap = genres.reduce((obj, genre, idx) => {
     if (obj[genre]) {
       obj[genre].total += plays[idx];
       obj[genre].songs.push([idx, plays[idx]]);
@@ -11,7 +11,7 @@ function solution(genres, plays) {
     }
     return obj;
   }, {});
-  const result = Object.entries(map).map((v) => {
+  const result = Object.entries(genreMap).map(v => {
     const [genre, info] = v;
     return [genre, info.total, info.songs];
   });
@@ -21,16 +21,12 @@ function solution(genres, plays) {
       const [, totalB] = b;
       return totalB - totalA;
     })
-    .map((v) => {
-      const [genre, total, songs] = v;
+    .map(v => {
+      const [, , songs] = v;
       songs.sort((a, b) => {
         const [idxA, playA] = a;
         const [idxB, playB] = b;
-        if (playA === playB) {
-          return idxA - idxB;
-        } else {
-          return playB - playA;
-        }
+        return playA === playB ? idxA - idxB : playB - playA;
       });
     });
   const answer = result.reduce((ret, v) => {
@@ -38,7 +34,7 @@ function solution(genres, plays) {
     return (ret = [
       ...ret,
       ...songs
-        .map((v) => {
+        .map(v => {
           const [idx] = v;
           return idx;
         })

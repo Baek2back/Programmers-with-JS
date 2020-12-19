@@ -1,11 +1,11 @@
 function solution(n) {
-  if (n === 1 || n === 2) return n;
-  let [prev2, prev1] = [1, 2];
+  const initialState = [1, 2];
+  if (initialState.includes(n)) return n;
+  let [beforePrev, prev] = initialState;
   let answer;
   for (let i = 2; i < n; i++) {
-    answer = (prev1 + prev2) % 1000000007;
-    prev2 = prev1;
-    prev1 = answer;
+    answer = (prev + beforePrev) % 1000000007;
+    [beforePrev, prev] = [prev, answer];
   }
   return answer;
 }
